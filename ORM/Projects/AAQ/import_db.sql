@@ -18,6 +18,7 @@ CREATE TABLE questions (
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+
 INSERT INTO
   users (fname, lname)
 VALUES
@@ -29,3 +30,24 @@ INSERT INTO
 VALUES
   ('Nani', "Omae wa mou, shindeiru", (SELECT id FROM users WHERE fname = 'Dingle' AND lname = 'Dork')),
   ('Funny', "He has a wife you know... Incontinentia Buttocks", (SELECT id FROM users WHERE fname = 'Biggus' AND lname = 'Dickus'));
+
+DROP TABLE if exists question_follows;
+
+CREATE TABLE question_follows AS
+  SELECT
+    questions.body, users.fname, users.lname
+  FROM
+    questions
+  JOIN users
+      ON questions.user_id = users.id;
+
+
+DROP TABLE if exists question_likes;
+
+CREATE TABLE question_likes AS
+  SELECT
+    questions.body, users.fname, users.lname
+  FROM
+    questions
+  JOIN users
+    ON questions.user_id = users.id;
