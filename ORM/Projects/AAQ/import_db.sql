@@ -37,9 +37,14 @@ DROP TABLE if exists replies;
 CREATE TABLE replies
 (
   id INTEGER PRIMARY KEY,
-  rtitle TEXT NOT NULL,
-  rbody TEXT NOT NULL,
-  parentreply INTEGER NOT NULL
+  user_id INTEGER NOT NULL,
+  question_id INTEGER NOT NULL,
+  top_reply_id INTEGER,
+  body TEXT,
+
+  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (question_id) REFERENCES questions(id)
+  FOREIGN KEY (top_reply_id) REFERENCES replies(id)
 
 );
 
@@ -62,3 +67,8 @@ VALUES
   ((SELECT id FROM users WHERE fname='Dingle' AND lname='Dork'), (SELECT id FROM questions WHERE user_id = 1)),
   ((SELECT id FROM users WHERE fname='Biggus' AND lname='Dickus'), (SELECT id FROM questions WHERE user_id = 2))
   ;
+
+INSERT INTO
+  replies (user_id, question_id, top_reply_id, body)
+VALUES
+  ((SELECT id FROM users WHERE fname='Dingle' AND lname='Dork'), (SELECT id FROM questions WHERE questions.user_id = 1), NULL, "NANI SHITERU NO?") 
