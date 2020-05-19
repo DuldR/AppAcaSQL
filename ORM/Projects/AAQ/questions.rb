@@ -34,11 +34,19 @@ class User
     @lname = options['lname']
   end
 
+  def authored_questions
+    Question.find_by_author_id(self.id)
+  end
+
+  def authored_replies
+    Reply.find_by_user_id(self.id)
+  end
+
 end
 
 class Question
 
-  attr_accessor :id, :title, :body
+  attr_accessor :id, :title, :body, :user_id
 
   def self.find_by_author_id(auth_id)
     data = QuestionsDatabase.instance.execute("SELECT * FROM questions WHERE user_id = ?", auth_id)
@@ -49,6 +57,12 @@ class Question
     @id = options['id']
     @title = options['title']
     @body = options['body']
+    @user_id = options['user_id']
+  end
+
+  def author
+
+
   end
 
 end
@@ -57,7 +71,7 @@ class Reply
 
   attr_accessor :id, :user_id, :question_id, :top_reply_id, :body
 
-  def self.find_by_author_id(auth_id)
+  def self.find_by_user_id(auth_id)
     data = QuestionsDatabase.instance.execute("SELECT * FROM replies WHERE user_id = ?", auth_id)
     data.map { |datum| Reply.new(datum) }
   end
