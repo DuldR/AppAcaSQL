@@ -30,6 +30,20 @@ CREATE TABLE questions_follows
   FOREIGN KEY (question_id) REFERENCES questions(id)
 );
 
+DROP TABLE if exists questions_liked;
+
+CREATE TABLE questions_liked
+(
+  id INTEGER PRIMARY KEY,
+  user_id INTEGER NOT NULL,
+  question_id INTEGER NOT NULL,
+
+  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY
+  (question_id) REFERENCES questions
+  (id)
+);
+
 
 
 DROP TABLE if exists replies;
