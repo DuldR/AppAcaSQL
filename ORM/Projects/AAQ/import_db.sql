@@ -94,4 +94,4 @@ INSERT INTO
   replies (user_id, question_id, top_reply_id, body)
 VALUES
   ((SELECT id FROM users WHERE fname='Dingle' AND lname='Dork'), (SELECT id FROM questions WHERE questions.user_id = 1), NULL, "NANI SHITERU NO?"),
-  ((SELECT id FROM users WHERE fname='Biggus' AND lname='Dickus'), (SELECT id FROM questions WHERE questions.user_id = 2), 1, "Oh? You're approaching me?");
+  ((SELECT id FROM users WHERE fname='Biggus' AND lname='Dickus'), (SELECT id FROM questions WHERE questions.user_id = 1), 1, "Oh? You're approaching me?");

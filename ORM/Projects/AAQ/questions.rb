@@ -60,6 +60,11 @@ class Question
     data.map { |datum| Question.new(datum) }
   end
 
+  def self.find_by_question_id(auth_id)
+    data = QuestionsDatabase.instance.execute("SELECT * FROM questions WHERE id = ?", auth_id)
+    data.map { |datum| Question.new(datum) }
+  end
+
   def initialize(options)
     @id = options['id']
     @title = options['title']
@@ -69,6 +74,10 @@ class Question
 
   def author
     User.find_by_id(self.user_id)
+  end
+
+  def replies
+    Reply.find_by_question_id(self.id)
   end
 
 end
@@ -98,6 +107,24 @@ class Reply
     @question_id = options['question_id']
     @top_reply_id = options['top_reply_id']
     @body = options['body']
+  end
+
+  def author
+    User.find_by_id(self.user_id)
+  end
+
+  def question
+    Question.find_by_question_id(self.question_id)
+  end
+
+  def parent_reply
+    data = QuestionsDatabase.instance.execute("SELECT * FROM replies WHERE id = ?", self.top_reply_id)
+    data.map { |datum| Reply.new(datum) }
+  end
+
+  def child_replies
+    data = QuestionsDatabase.instance.execute("SELECT * FROM replies WHERE top_reply_id = ?", self.id)
+    data.map { |datum| Reply.new(datum) }
   end
 
 end
