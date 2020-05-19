@@ -21,11 +21,13 @@ class User
   end
 
   def self.find_by_name(first, last)
-
     data = QuestionsDatabase.instance.execute("SELECT * FROM users WHERE fname = ? AND lname = ?", first, last)
-
     data.map {|datum| User.new(datum) }
+  end
 
+  def self.find_by_id(userid)
+    data = QuestionsDatabase.instance.execute("SELECT * FROM users WHERE users.id = ?", userid)
+    data.map {|datum| User.new(datum) }
   end
 
   def initialize(options)
@@ -48,6 +50,11 @@ class Question
 
   attr_accessor :id, :title, :body, :user_id
 
+  def self.all
+    data = QuestionsDatabase.instance.execute("SELECT * FROM questions")
+    data.map { |datum| Question.new(datum) }
+  end
+
   def self.find_by_author_id(auth_id)
     data = QuestionsDatabase.instance.execute("SELECT * FROM questions WHERE user_id = ?", auth_id)
     data.map { |datum| Question.new(datum) }
@@ -61,8 +68,7 @@ class Question
   end
 
   def author
-
-
+    User.find_by_id(self.user_id)
   end
 
 end
@@ -70,6 +76,11 @@ end
 class Reply
 
   attr_accessor :id, :user_id, :question_id, :top_reply_id, :body
+
+  def self.all
+    data = QuestionsDatabase.instance.execute("SELECT * FROM replies")
+    data.map { |datum| Reply.new(datum) }
+  end
 
   def self.find_by_user_id(auth_id)
     data = QuestionsDatabase.instance.execute("SELECT * FROM replies WHERE user_id = ?", auth_id)
