@@ -58,8 +58,13 @@ class Reply
   attr_accessor :id, :user_id, :question_id, :top_reply_id, :body
 
   def self.find_by_author_id(auth_id)
-    data = QuestionsDatabase.instance.execute("SELECT * FROM questions WHERE user_id = ?", auth_id)
-    data.map { |datum| Question.new(datum) }
+    data = QuestionsDatabase.instance.execute("SELECT * FROM replies WHERE user_id = ?", auth_id)
+    data.map { |datum| Reply.new(datum) }
+  end
+
+  def self.find_by_question_id(auth_id)
+    data = QuestionsDatabase.instance.execute("SELECT * FROM replies WHERE question_id = ?", auth_id)
+    data.map { |datum| Reply.new(datum) }
   end
 
   def initialize(options)
