@@ -128,3 +128,24 @@ class Reply
   end
 
 end
+
+class QuestionFollow
+
+  def self.follows_for_question_id(question_id)
+    data = QuestionsDatabase.instance.execute("SELECT user.id, fname, lname FROM questions_follows LEFT JOIN users ON questions_follows.user_id = users.id WHERE question_id = ?", question_id)
+    data.map { |datum| User.new(datum) }
+  end
+
+  def self.followed_questions_for_user_id(user_id)
+    data = QuestionsDatabase.instance.execute("SELECT questions.id, questions.title, questions.body, questions.user_id FROM questions_follows LEFT JOIN questions ON questions_follows.user_id = questions.user_id  WHERE question_id = ?", user_id)
+    data.map { |datum| Question.new(datum) }
+  end
+
+  def initialize(options)
+    @id = options['id']
+    @user_id = options['user_id']
+    @question_id = options['question_id']
+  end
+
+
+end
