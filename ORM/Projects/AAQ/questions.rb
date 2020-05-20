@@ -64,6 +64,10 @@ class User
     Reply.find_by_user_id(self.id)
   end
 
+  def followed_questions
+    QuestionFollow.followed_questions_for_user_id(self.id)
+  end
+
 end
 
 class Question
@@ -116,6 +120,10 @@ class Question
 
   def replies
     Reply.find_by_question_id(self.id)
+  end
+
+  def followers
+    QuestionFollow.follows_for_question_id(self.id)
   end
 
 end
@@ -201,8 +209,6 @@ class QuestionFollow
 
     SQL
     
-    
-    # ("SELECT questions.id, questions.title, questions.body, questions.user_id FROM questions_follows LEFT JOIN questions ON questions_follows.user_id = questions.user_id  WHERE question_id = ?", user_id)
     data.map { |datum| Question.new(datum) }
   end
 
