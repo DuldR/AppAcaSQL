@@ -212,6 +212,36 @@ class QuestionFollow
     data.map { |datum| Question.new(datum) }
   end
 
+  def self.most_followed_questions(n)
+
+    # I'll keep this here. This provides THE MOST followed question
+    # SELECT MAX(question_id) FROM (SELECT question_id, COUNT(question_id) AS count FROM questions_follows GROUP BY question_id);
+    #  Round 2
+    # SELECT questions.title, questions.body, questions.user_id, COUNT(question_id) AS count FROM questions_follows LEFT JOIN questions ON questions_follows.question_id = questions.id GROUP BY questions_follows.question_id ORDER BY count DESC LIMIT 1 OFFSET ? - 1;
+
+    data = QuestionsDatabase.instance.execute(<<-SQL, n)
+
+    SELECT
+    questions.id, questions.title, questions.body, questions.user_id, COUNT(questions_follows.question_id) AS count
+    FROM
+    questions_follows
+    LEFT JOIN 
+    questions
+    ON questions_follows.question_id = questions.id 
+    GROUP BY
+    questions_follows.question_id
+    ORDER BY
+    count DESC
+    LIMIT 1 OFFSET ? - 1
+    SQL
+
+    data.map { |datum| Question.new(datum) }
+
+
+
+  end
+    
+
   def initialize(options)
     @id = options['id']
     @user_id = options['user_id']

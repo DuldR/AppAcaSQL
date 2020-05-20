@@ -67,7 +67,9 @@ INSERT INTO
   users (fname, lname)
 VALUES
   ('Dingle', 'Dork'),
-  ('Biggus', 'Dickus');
+  ('Biggus', 'Dickus'),
+  ('Fridge', 'Largemeat'),
+  ('Stump', 'Chunkman');
 
 INSERT INTO
   questions (title, body, user_id)
@@ -79,7 +81,9 @@ INSERT INTO
   questions_follows (user_id, question_id)
 VALUES
   ((SELECT id FROM users WHERE fname='Dingle' AND lname='Dork'), (SELECT id FROM questions WHERE user_id = 1)),
-  ((SELECT id FROM users WHERE fname='Biggus' AND lname='Dickus'), (SELECT id FROM questions WHERE user_id = 2))
+  ((SELECT id FROM users WHERE fname='Biggus' AND lname='Dickus'), (SELECT id FROM questions WHERE user_id = 2)),
+  ((SELECT id FROM users WHERE fname='Fridge' AND lname='Largemeat'), 2),
+  ((SELECT id FROM users WHERE fname='Stump' AND lname='Chunkman'), 2)
   ;
 
 INSERT INTO
