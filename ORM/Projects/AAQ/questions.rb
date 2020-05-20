@@ -21,6 +21,7 @@ class User
   end
 
   def self.find_by_name(first, last)
+
     data = QuestionsDatabase.instance.execute(<<-SQL, first, last)
 
     SELECT
@@ -32,14 +33,20 @@ class User
 
     SQL
 
-
-    
-    #("SELECT * FROM users WHERE fname = ? AND lname = ?", first, last)
     data.map {|datum| User.new(datum) }
   end
 
   def self.find_by_id(userid)
-    data = QuestionsDatabase.instance.execute("SELECT * FROM users WHERE users.id = ?", userid)
+    data = QuestionsDatabase.instance.execute(<<-SQL, userid)
+
+    SELECT
+    *
+    FROM
+    users
+    WHERE
+    users.id = ?
+
+    SQL
     data.map {|datum| User.new(datum) }
   end
 
@@ -69,12 +76,30 @@ class Question
   end
 
   def self.find_by_author_id(auth_id)
-    data = QuestionsDatabase.instance.execute("SELECT * FROM questions WHERE user_id = ?", auth_id)
+    data = QuestionsDatabase.instance.execute(<<-SQL, auth_id)
+
+    SELECT
+    *
+    FROM
+    questions
+    WHERE user_id = ?
+
+    SQL
     data.map { |datum| Question.new(datum) }
   end
 
   def self.find_by_question_id(auth_id)
-    data = QuestionsDatabase.instance.execute("SELECT * FROM questions WHERE id = ?", auth_id)
+    data = QuestionsDatabase.instance.execute(<<-SQL, auth_id)
+
+    SELECT
+    *
+    FROM
+    questions
+    WHERE 
+    id = ?
+
+    SQL
+    
     data.map { |datum| Question.new(datum) }
   end
 
@@ -104,6 +129,7 @@ class Reply
     data.map { |datum| Reply.new(datum) }
   end
 
+  #Not gonna heredoc these as, I think I get the point.
   def self.find_by_user_id(auth_id)
     data = QuestionsDatabase.instance.execute("SELECT * FROM replies WHERE user_id = ?", auth_id)
     data.map { |datum| Reply.new(datum) }
@@ -144,13 +170,39 @@ end
 
 class QuestionFollow
 
+  #These definitely needed to be heredoc'd.
   def self.follows_for_question_id(question_id)
-    data = QuestionsDatabase.instance.execute("SELECT user.id, fname, lname FROM questions_follows LEFT JOIN users ON questions_follows.user_id = users.id WHERE question_id = ?", question_id)
+    data = QuestionsDatabase.instance.execute(<<-SQL, question_id)
+
+    SELECT
+    users.id, fname, lname
+    FROM
+    questions_follows
+    LEFT JOIN 
+    users ON questions_follows.user_id = users.id
+    WHERE
+    question_id = ?
+
+    SQL
     data.map { |datum| User.new(datum) }
   end
 
   def self.followed_questions_for_user_id(user_id)
-    data = QuestionsDatabase.instance.execute("SELECT questions.id, questions.title, questions.body, questions.user_id FROM questions_follows LEFT JOIN questions ON questions_follows.user_id = questions.user_id  WHERE question_id = ?", user_id)
+    data = QuestionsDatabase.instance.execute(<<-SQL, user_id)
+
+    SELECT
+    questions.id, questions.title, questions.body, questions.user_id
+    FROM
+    questions_follows
+    LEFT JOIN
+    questions ON questions_follows.user_id = questions.user_id
+    WHERE
+    question_id = ?
+
+    SQL
+    
+    
+    # ("SELECT questions.id, questions.title, questions.body, questions.user_id FROM questions_follows LEFT JOIN questions ON questions_follows.user_id = questions.user_id  WHERE question_id = ?", user_id)
     data.map { |datum| Question.new(datum) }
   end
 
