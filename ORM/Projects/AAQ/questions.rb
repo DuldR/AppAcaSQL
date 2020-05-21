@@ -107,6 +107,10 @@ class Question
     data.map { |datum| Question.new(datum) }
   end
 
+  def self.most_followed(n)
+    QuestionFollow.most_followed_questions(n)
+  end
+
   def initialize(options)
     @id = options['id']
     @title = options['title']
@@ -125,6 +129,7 @@ class Question
   def followers
     QuestionFollow.follows_for_question_id(self.id)
   end
+
 
 end
 
@@ -248,5 +253,50 @@ class QuestionFollow
     @question_id = options['question_id']
   end
 
+
+end
+
+class QuestionLike
+
+  def self.likers_for_question(question_id)
+    data = QuestionsDatabase.instance.execute(<<-SQL, question_id)
+
+    SELECT
+    users.id, fname, lname
+    FROM 
+    questions_liked
+    LEFT JOIN
+    users ON questions_liked.user_id = users.id
+    WHERE
+    questions_liked.question_id = ?
+
+    SQL
+
+    data.map { |datum| User.new(datum) }
+
+  end
+
+  def self.num_likes_for_question_id(question_id)
+    data = QuestionsDatabase.instance.execute(<<-SQL, question_id)
+
+    SELECT
+    COUNT(question_id) AS count
+    FROM
+    questions_liked
+    WHERE
+    question_id = ?
+    GROUP BY
+    question_id
+
+    SQL
+
+    data[0]["count"]
+  end
+
+  def initialize(options)
+    @id = options['id']
+    @user_id = options['user_id']
+    @question_id = options['question_id']
+  end
 
 end

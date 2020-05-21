@@ -90,8 +90,11 @@ INSERT INTO
   questions_liked
   (user_id, question_id)
 VALUES
-  ((SELECT id FROM users WHERE fname='Dingle' AND lname='Dork'), (SELECT id FROM questions WHERE user_id = 2)),
-  ((SELECT id FROM users WHERE fname='Biggus' AND lname='Dickus'), (SELECT id FROM questions WHERE user_id = 1))
+  ((SELECT id FROM users WHERE fname='Dingle' AND lname='Dork'), 2),
+  ((SELECT id FROM users WHERE fname='Biggus' AND lname='Dickus'), 2),
+  ((SELECT id FROM users WHERE fname='Fridge' AND lname='Largemeat'), 2),
+  ((SELECT id FROM users WHERE fname='Stump' AND lname='Chunkman'), 1),
+  ((SELECT id FROM users WHERE fname='Stump' AND lname='Chunkman'), 2)
   ;
 
 INSERT INTO
