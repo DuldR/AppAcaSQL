@@ -115,6 +115,10 @@ class Question
     QuestionFollow.most_followed_questions(n)
   end
 
+  def self.most_liked(n)
+    QuestionLike.most_liked_questions(n)
+  end
+
   def initialize(options)
     @id = options['id']
     @title = options['title']
@@ -249,7 +253,7 @@ class QuestionFollow
     questions_follows.question_id
     ORDER BY
     count DESC
-    LIMIT 1 OFFSET ? - 1
+    LIMIT ?
     SQL
 
     data.map { |datum| Question.new(datum) }
@@ -315,6 +319,30 @@ class QuestionLike
     questions ON questions_liked.question_id = questions.id
     WHERE
     questions_liked.user_id = ?
+
+    SQL
+
+    data.map { |datum| Question.new(datum) }
+
+  end
+
+  def self.most_liked_questions(n)
+
+    data = QuestionsDatabase.instance.execute(<<-SQL, n)
+
+
+    SELECT
+    questions.id, questions.title, questions.body, questions.user_id, COUNT(questions_liked.question_id) AS count
+    FROM
+    questions_liked
+    LEFT JOIN 
+    questions
+    ON questions_liked.question_id = questions.id 
+    GROUP BY
+    questions_liked.question_id
+    ORDER BY
+    count DESC
+    LIMIT ?
 
     SQL
 
