@@ -69,13 +69,15 @@ VALUES
   ('Dingle', 'Dork'),
   ('Biggus', 'Dickus'),
   ('Fridge', 'Largemeat'),
-  ('Stump', 'Chunkman');
+  ('Stump', 'Chunkman'),
+  ('Big', 'McLargeHuge');
 
 INSERT INTO
   questions (title, body, user_id)
 VALUES
   ('Nani', "Omae wa mou, shindeiru", (SELECT id FROM users WHERE fname = 'Dingle' AND lname = 'Dork')),
-  ('Funny', "He has a wife you know... Incontinentia Buttocks", (SELECT id FROM users WHERE fname = 'Biggus' AND lname = 'Dickus'));
+  ('Funny', "He has a wife you know... Incontinentia Buttocks", (SELECT id FROM users WHERE fname = 'Biggus' AND lname = 'Dickus')),
+  ('Brian', "Always look on the bright side of life.", 2);
 
 INSERT INTO
   questions_follows (user_id, question_id)
@@ -94,7 +96,9 @@ VALUES
   ((SELECT id FROM users WHERE fname='Biggus' AND lname='Dickus'), 2),
   ((SELECT id FROM users WHERE fname='Fridge' AND lname='Largemeat'), 2),
   ((SELECT id FROM users WHERE fname='Stump' AND lname='Chunkman'), 1),
-  ((SELECT id FROM users WHERE fname='Stump' AND lname='Chunkman'), 2)
+  ((SELECT id FROM users WHERE fname='Stump' AND lname='Chunkman'), 2),
+  ((SELECT id FROM users WHERE fname='Fridge' AND lname='Largemeat'), 1),
+  ((SELECT id FROM users WHERE fname='Big' AND lname='McLargeHuge'), 2)
   ;
 
 INSERT INTO
