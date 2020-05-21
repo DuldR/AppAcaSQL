@@ -68,6 +68,10 @@ class User
     QuestionFollow.followed_questions_for_user_id(self.id)
   end
 
+  def liked_questions
+    QuestionLike.liked_questions_for_user_id(self.id)
+  end
+
 end
 
 class Question
@@ -128,6 +132,14 @@ class Question
 
   def followers
     QuestionFollow.follows_for_question_id(self.id)
+  end
+
+  def likers
+    QuestionLike.likers_for_question(self.user_id)
+  end
+
+  def num_likes
+    QuestionLike.num_likes_for_question_id(self.id)
   end
 
 
@@ -242,8 +254,6 @@ class QuestionFollow
 
     data.map { |datum| Question.new(datum) }
 
-
-
   end
     
 
@@ -292,6 +302,27 @@ class QuestionLike
 
     data[0]["count"]
   end
+
+  def self.liked_questions_for_user_id(user_id)
+
+    data = QuestionsDatabase.instance.execute(<<-SQL, user_id)
+
+    SELECT
+    questions.id, questions.title, questions.body, questions.user_id
+    FROM
+    questions_liked
+    LEFT JOIN
+    questions ON questions_liked.question_id = questions.id
+    WHERE
+    questions_liked.user_id = ?
+
+    SQL
+
+    data.map { |datum| Question.new(datum) }
+
+  end
+
+
 
   def initialize(options)
     @id = options['id']
