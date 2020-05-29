@@ -7,6 +7,15 @@ class Course < ApplicationRecord
         primary_key: :id
     )
 
+    has_one(
+        :preq,
+        class_name: 'Course',
+        foreign_key: :id,
+        primary_key: :prereq_id
+    )
+
     has_many :users, through: :enrollments, source: :user
+
+
 
 end
