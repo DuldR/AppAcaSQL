@@ -5,7 +5,7 @@ class ShortenedUrl < ApplicationRecord
 
 
     def self.random_code
-        print SecureRandom::urlsafe_base64
+        print :short_url
     end
 
 
