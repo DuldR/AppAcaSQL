@@ -3,6 +3,13 @@ class ShortenedUrl < ApplicationRecord
     validates :user_id, :short_url, presence: true
     validates :short_url, uniqueness: true
 
+    belongs_to(
+        :user,
+        class_name: 'User',
+        foreign_key: :user_id,
+        primary_key: :id
+    )
+
 
     def self.random_code
         not_yet = 0
@@ -23,6 +30,7 @@ class ShortenedUrl < ApplicationRecord
             long_url: long_url,
             short_url: ShortenedUrl.random_code
         )
+    end
 
 
 end
