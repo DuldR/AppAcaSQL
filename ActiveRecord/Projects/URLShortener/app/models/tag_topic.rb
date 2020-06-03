@@ -21,4 +21,16 @@ class TagTopic < ApplicationRecord
 
     has_many :urls, through: :taggings, source: :url
 
+    def popular_links
+        data = self.urls.limit(5)
+
+        data.each do |url|
+            print url.short_url
+            print "\n"
+            print url.num_clicks
+            print "\n"
+        end
+
+    end
+
 end

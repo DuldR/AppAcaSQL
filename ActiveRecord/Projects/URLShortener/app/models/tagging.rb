@@ -25,4 +25,12 @@ class Tagging < ApplicationRecord
         primary_key: :id
     )
 
+    def self.record_tag!(tag_topic, short_url)
+        Tagging.create!(
+            topic_id: tag_topic.id,
+            url_id: short_url.id
+        )
+    end
+    
+
 end
