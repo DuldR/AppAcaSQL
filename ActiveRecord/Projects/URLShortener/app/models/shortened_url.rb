@@ -28,6 +28,8 @@ class ShortenedUrl < ApplicationRecord
 
     has_many :visitors, through: :visits, source: :user
 
+    has_many :uniq_vis, Proc.new { distinct }, through: :visits, source: :user
+
 
     def self.random_code
         not_yet = 0
@@ -54,6 +56,10 @@ class ShortenedUrl < ApplicationRecord
     #Much easier than I thought. You don't need to add any raw SQL.
     def num_clicks
         self.visitors.count
+    end
+
+    def num_uniques
+        self.uniq_vis.count
     end
 
 
