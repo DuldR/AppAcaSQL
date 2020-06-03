@@ -62,5 +62,9 @@ class ShortenedUrl < ApplicationRecord
         self.uniq_vis.count
     end
 
+    def num_uniq_recent
+        self.uniq_vis.where(created_at: 60.minutes.ago..Time.current).count
+    end
+
 
 end

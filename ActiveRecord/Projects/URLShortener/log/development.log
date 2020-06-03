@@ -352,3 +352,38 @@ Migrating to CreateVisits (20200602171134)
   [1m[35m (1.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1[0m  [["url_id", 5]]
   [1m[36mShortenedUrl Load (0.4ms)[0m  [1m[34mSELECT "shortened_urls".* FROM "shortened_urls"[0m
   [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(DISTINCT "users"."id") FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1[0m  [["url_id", 5]]
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT COUNT(DISTINCT "users"."id") FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1[0m  [["url_id", 5]]
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT DISTINCT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1[0m  [["url_id", 5]]
+  [1m[36mUser Load (2.1ms)[0m  [1m[34mSELECT DISTINCT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1 AND (:user_id = 3)[0m  [["url_id", 5]]
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT DISTINCT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1 AND (:user_id = 3) LIMIT $2[0m  [["url_id", 5], ["LIMIT", 11]]
+  [1m[36mUser Load (1.8ms)[0m  [1m[34mSELECT DISTINCT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1 AND (created_at: 10.minutes.ago..Time.current)[0m  [["url_id", 5]]
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT DISTINCT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1 AND (created_at: 10.minutes.ago..Time.current) LIMIT $2[0m  [["url_id", 5], ["LIMIT", 11]]
+  [1m[36mUser Load (1.7ms)[0m  [1m[34mSELECT DISTINCT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1 AND (created_at: 60.minutes.ago..Time.current)[0m  [["url_id", 5]]
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT DISTINCT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1 AND (created_at: 60.minutes.ago..Time.current) LIMIT $2[0m  [["url_id", 5], ["LIMIT", 11]]
+  [1m[36mUser Load (2.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1 AND (created_at: 60.minutes.ago..Time.current)[0m  [["url_id", 5]]
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1 AND (created_at: 60.minutes.ago..Time.current) LIMIT $2[0m  [["url_id", 5], ["LIMIT", 11]]
+  [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1 AND (created_at: 60.hours.ago..Time.current)[0m  [["url_id", 5]]
+  [1m[36mUser Load (1.8ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1 AND (created_at: 60.hours.ago..Time.current) LIMIT $2[0m  [["url_id", 5], ["LIMIT", 11]]
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1[0m  [["url_id", 5]]
+  [1m[36mVisit Load (1.5ms)[0m  [1m[34mSELECT "visits".* FROM "visits" WHERE (created_at: 60.minutes.ago..Time.current)[0m
+  [1m[36mVisit Load (1.7ms)[0m  [1m[34mSELECT "visits".* FROM "visits" WHERE (created_at: 60.minutes.ago..Time.current) LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mVisit Load (0.8ms)[0m  [1m[34mSELECT "visits".* FROM "visits"[0m
+  [1m[36mVisit Load (1.8ms)[0m  [1m[34mSELECT "visits".* FROM "visits" WHERE (created_at: 60.minutes.ago)[0m
+  [1m[36mVisit Load (1.8ms)[0m  [1m[34mSELECT "visits".* FROM "visits" WHERE (created_at: 60.minutes.ago) LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mVisit Load (2.1ms)[0m  [1m[34mSELECT "visits".* FROM "visits" WHERE (created_at: 60.minutes.ago..Time.current)[0m
+  [1m[36mVisit Load (1.9ms)[0m  [1m[34mSELECT "visits".* FROM "visits" WHERE (created_at: 60.minutes.ago..Time.current) LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mVisit Load (1.9ms)[0m  [1m[34mSELECT "visits".* FROM "visits" WHERE (created_at: 30.minutes.ago..Time.current)[0m
+  [1m[36mVisit Load (2.0ms)[0m  [1m[34mSELECT "visits".* FROM "visits" WHERE (created_at: 30.minutes.ago..Time.current) LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mVisit Load (0.8ms)[0m  [1m[34mSELECT "visits".* FROM "visits" WHERE "visits"."created_at" BETWEEN $1 AND $2[0m  [["created_at", "2020-06-03 16:16:49.973730"], ["created_at", "2020-06-03 16:46:49.973826"]]
+  [1m[36mVisit Load (0.8ms)[0m  [1m[34mSELECT "visits".* FROM "visits" WHERE "visits"."created_at" BETWEEN $1 AND $2[0m  [["created_at", "2020-06-03 16:16:59.815834"], ["created_at", "2020-06-03 16:46:59.815939"]]
+  [1m[36mVisit Load (0.2ms)[0m  [1m[34mSELECT "visits".* FROM "visits" WHERE "visits"."created_at" BETWEEN $1 AND $2[0m  [["created_at", "2020-06-03 15:47:37.174275"], ["created_at", "2020-06-03 16:47:37.174332"]]
+  [1m[36mShortenedUrl Load (1.3ms)[0m  [1m[34mSELECT "shortened_urls".* FROM "shortened_urls"[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1[0m  [["url_id", 5]]
+  [1m[36mVisit Load (0.7ms)[0m  [1m[34mSELECT "visits".* FROM "visits" WHERE "visits"."url_id" = $1[0m  [["url_id", 5]]
+  [1m[36mVisit Load (0.7ms)[0m  [1m[34mSELECT "visits".* FROM "visits" WHERE "visits"."url_id" = $1 AND "visits"."created_at" BETWEEN $2 AND $3[0m  [["url_id", 5], ["created_at", "2020-06-03 15:48:23.975787"], ["created_at", "2020-06-03 16:48:23.975894"]]
+  [1m[36mVisit Load (0.8ms)[0m  [1m[34mSELECT "visits".* FROM "visits" WHERE "visits"."url_id" = $1 AND "visits"."created_at" BETWEEN $2 AND $3[0m  [["url_id", 5], ["created_at", "2020-06-03 16:18:32.712365"], ["created_at", "2020-06-03 16:48:32.712469"]]
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT DISTINCT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1 AND "users"."created_at" BETWEEN $2 AND $3[0m  [["url_id", 5], ["created_at", "2020-06-03 16:19:13.116497"], ["created_at", "2020-06-03 16:49:13.116591"]]
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT DISTINCT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1[0m  [["url_id", 5]]
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT DISTINCT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1 AND "users"."created_at" BETWEEN $2 AND $3[0m  [["url_id", 5], ["created_at", "2020-06-03 15:50:10.962193"], ["created_at", "2020-06-03 16:50:10.962288"]]
+  [1m[36mShortenedUrl Load (0.6ms)[0m  [1m[34mSELECT "shortened_urls".* FROM "shortened_urls"[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(DISTINCT "users"."id") FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."url_id" = $1 AND "users"."created_at" BETWEEN $2 AND $3[0m  [["url_id", 5], ["created_at", "2020-06-03 15:51:04.319165"], ["created_at", "2020-06-03 16:51:04.319210"]]
