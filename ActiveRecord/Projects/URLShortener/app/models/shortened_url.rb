@@ -51,4 +51,10 @@ class ShortenedUrl < ApplicationRecord
     end
 
 
+    #Much easier than I thought. You don't need to add any raw SQL.
+    def num_clicks
+        self.visitors.count
+    end
+
+
 end
