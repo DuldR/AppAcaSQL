@@ -7,7 +7,7 @@ puts "Enter your email: "
 myEmail = gets.chomp
 
 if User.exists?(:email => myEmail)
-    user = User.find_by(email: myEmail).id
+    user = User.find_by(email: myEmail)
 else
     user = User.create!(email: myEmail)
 end
@@ -17,8 +17,21 @@ puts "0. Create a shortened URL"
 puts "1. Visit a shortened URL"
 myChoice = gets.chomp
 
+if myChoice == "0"
+    puts "Enter your long url"
+    myUrl = gets.chomp
+
+    url = ShortenedUrl.create_url(user, myUrl)
+
+    puts "Short url is: #{url.short_url}"
+
+elsif myChoice == "1"
+    puts "Input your shortened URL"
+    url = gets.chomp
+
+    long_url = ShortenedUrl.find_by(short_url: url).long_url
+    Launchy.open long_url
+end
 
 
 
-
-#Launchy.open 'http://bigdickbitch.com/'
