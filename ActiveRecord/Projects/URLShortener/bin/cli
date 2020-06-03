@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+
+user = nil
+
+puts "Enter your email: "
+myEmail = gets.chomp
+
+if User.exists?(:email => myEmail)
+    user = User.find_by(email: myEmail).id
+else
+    user = User.create!(email: myEmail)
+end
+
+puts "What do you want to do?"
+puts "0. Create a shortened URL"
+puts "1. Visit a shortened URL"
+myChoice = gets.chomp
+
+
+
+
+
+#Launchy.open 'http://bigdickbitch.com/'
