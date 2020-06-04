@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+User.create!(email: "footballluvr69@foosball.com")
+
+ShortenedUrl.create!(short_url: "eYvhw-k81SrWvt6GAGeqCQ", long_url: "espn.com", user_id: 1, created_at: Time.current, updated_at: Time.current)
