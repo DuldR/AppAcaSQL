@@ -63,6 +63,13 @@ class ShortenedUrl < ApplicationRecord
         )
     end
 
+    def no_spamming
+        unless self.user.submitted_urls.where(created_at: 1.minutes.ago..Time.current).count < 5
+            errors[:user_id] << "You can only submit 5 URLs within 1 minute."
+        end
+
+    end
+
 
     #Much easier than I thought. You don't need to add any raw SQL.
     def num_clicks
