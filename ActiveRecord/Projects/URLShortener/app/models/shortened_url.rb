@@ -35,11 +35,11 @@ class ShortenedUrl < ApplicationRecord
         primary_key: :id
     )
 
-    has_many :visitors, through: :visits, source: :user
+    has_many :visitors, through: :visits, source: :user, dependent: :destroy
 
-    has_many :tags, through: :taggings, source: :tag_topic
+    has_many :tags, through: :taggings, source: :tag_topic, dependent: :destroy
 
-    has_many :uniq_vis, Proc.new { distinct }, through: :visits, source: :user
+    has_many :uniq_vis, Proc.new { distinct }, through: :visits, source: :user, dependent: :destroy
 
 
     def self.prune(n)

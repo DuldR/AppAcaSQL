@@ -25,8 +25,8 @@ class User < ApplicationRecord
         primary_key: :id
     )
 
-    has_many :visited_urls, through: :visits, source: :short_url
+    has_many :visited_urls, through: :visits, source: :short_url, dependent: :destroy
 
-    has_many :uniq_visited_urls, Proc.new { distinct }, through: :visits, source: :short_url
+    has_many :uniq_visited_urls, Proc.new { distinct }, through: :visits, source: :short_url, dependent: :destroy
 
 end
