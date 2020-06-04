@@ -64,10 +64,14 @@ class ShortenedUrl < ApplicationRecord
     end
 
     def no_spamming
-        unless self.user.submitted_urls.where(created_at: 1.minutes.ago..Time.current).count < 5
+        if self.user.submitted_urls.where(created_at: 1.minutes.ago..Time.current).count >= 5 && nonpremium_max == false
             errors[:user_id] << "You can only submit 5 URLs within 1 minute."
         end
 
+    end
+
+    def nonpremium_max
+        self.user.premium
     end
 
 
