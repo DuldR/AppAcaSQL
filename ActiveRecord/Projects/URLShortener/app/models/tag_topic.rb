@@ -25,10 +25,11 @@ class TagTopic < ApplicationRecord
         data = self.urls.limit(5)
 
         data.each do |url|
-            print url.short_url
-            print "\n"
-            print url.num_clicks
-            print "\n"
+            s = url.short_url
+            t = url.num_clicks
+
+            print s
+            print t
         end
 
     end
