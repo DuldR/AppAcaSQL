@@ -45,7 +45,7 @@ class ShortenedUrl < ApplicationRecord
     def self.prune(n)
 
         ShortenedUrl.all.each do |url|
-            if url.visitors.count == 0 && url.created_at.between?(n.minutes.ago, Time.current)
+            if url.visitors.count == 0 && !url.created_at.between?(n.minutes.ago, Time.current)
                 url.destroy
             end
         end
