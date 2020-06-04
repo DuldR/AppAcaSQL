@@ -42,6 +42,16 @@ class ShortenedUrl < ApplicationRecord
     has_many :uniq_vis, Proc.new { distinct }, through: :visits, source: :user
 
 
+    def self.prune(n)
+
+        ShortenedUrl.all.each do |url|
+            if url.visitors.count == 0 && url.created_at.between?(n.minutes.ago, Time.current)
+                url.destroy
+            end
+        end
+
+    end
+
     def self.random_code
         not_yet = 0
         until not_yet == 1
@@ -62,6 +72,8 @@ class ShortenedUrl < ApplicationRecord
             short_url: ShortenedUrl.random_code
         )
     end
+
+    # Controls how many URLs can be made.
 
     def no_spamming
         if self.user.submitted_urls.where(created_at: 1.minutes.ago..Time.current).count >= 5 && nonpremium_max == false
