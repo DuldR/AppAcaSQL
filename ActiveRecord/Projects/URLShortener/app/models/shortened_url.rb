@@ -41,6 +41,40 @@ class ShortenedUrl < ApplicationRecord
 
     has_many :uniq_vis, Proc.new { distinct }, through: :visits, source: :user, dependent: :destroy
 
+    # Singular query version.
+
+    #      def self.prune(n)
+    #     ShortenedUrl
+    #       .joins(:submitter)
+    #       .joins('LEFT JOIN visits ON visits.shortened_url_id = shortened_urls.id')
+    #       .where("(shortened_urls.id IN (
+    #         SELECT shortened_urls.id
+    #         FROM shortened_urls
+    #         JOIN visits
+    #         ON visits.shortened_url_id = shortened_urls.id
+    #         GROUP BY shortened_urls.id
+    #         HAVING MAX(visits.created_at) < \'#{n.minute.ago}\'
+    #       ) OR (
+    #         visits.id IS NULL and shortened_urls.created_at < \'#{n.minutes.ago}\'
+    #       )) AND users.premium = \'f\'")
+    #       .destroy_all
+
+    #     # The sql for the query would be:
+    #     #
+    #     # SELECT shortened_urls.*
+    #     # FROM shortened_urls
+    #     # JOIN users ON users.id = shortened_urls.submitter_id
+    #     # LEFT JOIN visits ON visits.shortened_url_id = shortened_urls.id
+    #     # WHERE (shortened_urls.id IN (
+    #     #   SELECT shortened_urls.id
+    #     #   FROM shortened_urls
+    #     #   JOIN visits ON visits.shortened_url_id = shortened_urls.id
+    #     #   GROUP BY shortened_urls.id
+    #     #   HAVING MAX(visits.created_at) < "#{n.minute.ago}"
+    #     # ) OR (
+    #     #   visits.id IS NULL and shortened_urls.created_at < '#{n.minutes.ago}'
+    #     # )) AND users.premium = 'f'
+    #   end
 
     def self.prune(n)
 

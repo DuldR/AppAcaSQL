@@ -68,25 +68,31 @@ class User
     QuestionFollow.followed_questions_for_user_id(self.id)
   end
 
-  def liked_questions
-    QuestionLike.liked_questions_for_user_id(self.id)
-  end
+  def save
 
-  def average_karma
-    data = QuestionsDatabase.instance.execute(<<-SQL, self.id)
+    if @id == nil
+      QuestionsDatabase.instance.execute(<<-SQL, @fname, @lname)
 
-    SELECT 
-    (CAST(COUNT(questions_liked.question_id) / SUM(DISTINCT(questions.user_id)) AS FLOAT)) AS karma 
-    FROM questions 
-    LEFT JOIN 
-    questions_liked ON questions.id = questions_liked.question_id
-    WHERE
-    questions.user_id = ?
-    GROUP BY questions.user_id
+      INSERT INTO
+        users(fname, lname)
+      VALUES
+        (?, ?)
+      SQL
 
-    SQL
+      @id = QuestionsDatabase.instance.last_insert_row_id
+    else
+      QuestionsDatabase.instance.execute(<<-SQL, @fname, @lname, @id)
 
-    data[0]["karma"]
+      UPDATE
+        users
+      SET
+        fname = ?, lname = ?
+      WHERE
+        id = ?
+      
+      SQL
+    end
+
   end
 
 end
@@ -155,6 +161,7 @@ class Question
     QuestionFollow.follows_for_question_id(self.id)
   end
 
+<<<<<<< HEAD
   def likers
     QuestionLike.likers_for_question(self.user_id)
   end
@@ -163,6 +170,34 @@ class Question
     QuestionLike.num_likes_for_question_id(self.id)
   end
 
+=======
+  def save
+
+    if @id == nil
+      QuestionsDatabase.instance.execute(<<-SQL, @title, @body, @user_id)
+
+      INSERT INTO
+        questions(title, body, user_id)
+      VALUES
+        (?, ?, ?)
+      SQL
+
+      @id = QuestionsDatabase.instance.last_insert_row_id
+    else
+      QuestionsDatabase.instance.execute(<<-SQL, @title, @body, @user_id, @id)
+
+      UPDATE
+        questions
+      SET
+        title = ?, body = ?, user_id = ?
+      WHERE
+        id = ?
+      
+      SQL
+    end
+
+  end
+>>>>>>> fa29f8f6ae73c3045edbc38496d3a4ff285a281e
 
 end
 
@@ -210,6 +245,33 @@ class Reply
   def child_replies
     data = QuestionsDatabase.instance.execute("SELECT * FROM replies WHERE top_reply_id = ?", self.id)
     data.map { |datum| Reply.new(datum) }
+  end
+
+  def save
+
+    if @id == nil
+      QuestionsDatabase.instance.execute(<<-SQL, @user_id, @question_id, @top_reply_id, @body)
+
+      INSERT INTO
+        replies(user_id, question_id, top_reply_id, body)
+      VALUES
+        (?, ?, ?, ?)
+      SQL
+
+      @id = QuestionsDatabase.instance.last_insert_row_id
+    else
+      QuestionsDatabase.instance.execute(<<-SQL, @user_id, @question_id, @top_reply_id, @body, @id)
+
+      UPDATE
+        replies
+      SET
+        user_id = ?, question_id = ?, top_reply_id = ?, body = ?
+      WHERE
+        id = ?
+      
+      SQL
+    end
+
   end
 
 end
