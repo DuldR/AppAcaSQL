@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Float</title>
+
+    <style>
+
+        h1 {
+            display: block;
+            background: yellow;
+
+        }
+
+        p {
+            display: block;
+            background: orange;
+        }
+
+        img {
+            display: block;
+            width: 300;
+            height: 400;
+
+            float: left;
+            opacity: .5;
+        }
+
+        article{
+            margin: 50px;
+            background: blue;
+            border: 10px solid red;
+            clear: left;
+        }
+
+        .stop-float{
+            background: green;
+            clear: left;
+        }
+
+        .pseudo-stop-float:after {
+            content: "Stop thefloat";
+            background: green;
+            display: block;
+            clear: left;
+        }
+
+        .clearfix:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+    </style>
+</head>
+<body>
+
+    <article class="pseudo-stop-float">
+        <h1> Cats</h1>
+
+        <img src="appacademylogo.png" alt="cat">
+
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto autem nostrum officiis ratione! Quae dolor culpa temporibus. Blanditiis voluptatem molestiae soluta saepe, magni eligendi expedita in facilis voluptatibus iste eum.</p>
+
+        <div class="stop-float"></div> 
+
+    </article>
+    
+    <article>
+        <h1>Lasers</h1>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Inventore ad porro in illo modi, minus accusantium? Modi dolorum voluptates libero, tempore veniam, reprehenderit nemo, quasi exercitationem rem hic voluptatem ipsa!</p>
+    </article>
+</body>
+</html>
