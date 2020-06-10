@@ -67,12 +67,23 @@ def alphabetized_actors
   # are alphabetized differently than the specs.
   # This spec might fail for Ubuntu users. It's ok!
 
+  Actor
+    .select('actors.id, actors.name')
+    .order('actors.name ASC')
+    .limit(10)
+
 end
 
 def pulp_fiction_actors
   # practice using joins
   # display the id and name of all actors in the movie Pulp Fiction
   # hint: use 'select', 'joins', 'where'
+
+  Movie
+    .select('actors.*')
+    .joins(:actors)
+    .where(movies: { title: 'Pulp Fiction' })
+
 
 end
 
@@ -81,5 +92,11 @@ def uma_movies
   # display the id, title, and year of movies Uma Thurman has acted in
   # order them by ascending year
   # hint: use 'select', 'joins', 'where', and 'order'
+
+  Movie
+    .select('movies.id, movies.title, movies.yr')
+    .joins(:actors)
+    .where(actors: { name: 'Uma Thurman' })
+    .order('movies.yr ASC')
 
 end
