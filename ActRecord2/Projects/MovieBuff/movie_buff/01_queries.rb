@@ -69,6 +69,32 @@ def directed_by_one_of(them)
   #
   # Find the id and title of all the movies directed by one of 'them'.
 
+    # arr = Actor
+    #   .select('actors.*')
+    #   .where(name: them)
+
+    # check = []
+
+    # arr.each do |r|
+    #   r.directed_movies.each do |movie|
+    #     check << {"id" => movie.id, "title" => movie.title}
+    #   end
+    # end
+
+
+    # check
+
+    arr = Actor
+      .select('actors.*, movies.*')
+      .joins(:directed_movies)
+      .where(name: them)
+
+    arr.map do |movie|
+      {"id" => movie.id, "title" => movie.title}
+    end
+
+
+
 end
 
 def movie_names_before_1940
