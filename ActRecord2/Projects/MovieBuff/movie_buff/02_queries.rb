@@ -3,6 +3,10 @@ def eighties_b_movies
   # 3 and 5 (inclusive).
   # Show the id, title, year, and score.
 
+  Movie
+    .select('movies.id, movies.title, movies.yr, movies.score')
+    .where('yr BETWEEN ? AND ? AND score BETWEEN ? AND ?', 1980, 1989, 3, 5)
+
 end
 
 def bad_years
