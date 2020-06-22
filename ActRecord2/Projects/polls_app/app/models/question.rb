@@ -10,5 +10,15 @@
 #
 class Question < ApplicationRecord
 
+    belongs_to :poll,
+        class_name: :Poll,
+        foreign_key: :poll_id,
+        primary_key: :id
+
+    has_many :answers,
+        class_name: :AnswerChoice,
+        foreign_key: :q_id,
+        primary_key: :id
+
 
 end

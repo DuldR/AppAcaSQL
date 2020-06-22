@@ -9,7 +9,7 @@
 #
 class User < ApplicationRecord
 
-    has_many :authored_polls,
+    has_many :polls,
         class_name: :Poll,
         foreign_key: :user_id,
         primary_key: :id

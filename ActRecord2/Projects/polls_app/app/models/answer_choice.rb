@@ -10,5 +10,10 @@
 #
 class AnswerChoice < ApplicationRecord
 
+    belongs_to :question,
+        class_name: :Question,
+        foreign_key: :q_id,
+        primary_key: :id
+
 
 end

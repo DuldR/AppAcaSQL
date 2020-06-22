@@ -15,4 +15,15 @@ class Response < ApplicationRecord
      class_name: :User,
      foreign_key: :user_id,
      primary_key: :id
+
+    belongs_to  :question,
+     class_name: :Question,
+     foreign_key: :question_id,
+     primary_key: :id
+
+    belongs_to  :answer,
+     class_name: :AnswerChoice,
+     foreign_key: :answer_id,
+     primary_key: :id
+
 end
