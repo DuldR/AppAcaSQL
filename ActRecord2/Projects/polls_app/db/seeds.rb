@@ -23,4 +23,4 @@ AnswerChoice.create!(q_id: 1, a_body: "Hells Yet.")
 AnswerChoice.create!(q_id: 2, a_body: "He's fine!")
 AnswerChoice.create!(q_id: 2, a_body: "Turtle!")
 
-Response.create!(answer_id: 1, user_id: 1)
+Response.create!(answer_id: 1, user_id: 2)

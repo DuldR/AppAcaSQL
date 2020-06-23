@@ -11,6 +11,7 @@
 class Response < ApplicationRecord
 
     validate :no_duplicate_responses
+    validate :no_rigging
 
     belongs_to  :respondent,
      class_name: :User,
@@ -38,6 +39,16 @@ class Response < ApplicationRecord
         if respondent_already_answered?
             errors[:user_id] << "You have already made a response to this question."
         end    
+    end
+
+    def poll_author
+        self.question.poll.user_id
+    end
+
+    def no_rigging
+        if poll_author == self.user_id
+            errors[:user_id] << "You can't answer your own poll!"
+        end
     end
 
 end
