@@ -22,5 +22,5 @@ class Question < ApplicationRecord
         foreign_key: :q_id,
         primary_key: :id
 
-
+    has_many :responses, through: :answers
 end
