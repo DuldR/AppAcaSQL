@@ -10,6 +10,8 @@
 #
 class Response < ApplicationRecord
 
+    validate :no_duplicate_responses
+
     belongs_to  :respondent,
      class_name: :User,
      foreign_key: :user_id,
@@ -25,8 +27,17 @@ class Response < ApplicationRecord
 
     
     def sibling_response
-
         self.question.responses.where.not(id: self.id)
-
     end
+
+    def respondent_already_answered?
+        sibling_response.exists?(self.user_id)
+    end
+
+    def no_duplicate_responses
+        if respondent_already_answered?
+            errors[:user_id] << "You have already made a response to this question."
+        end    
+    end
+
 end
