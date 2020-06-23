@@ -10,6 +10,8 @@
 #
 class AnswerChoice < ApplicationRecord
 
+    validates :a_body, presence: true
+
     belongs_to :question,
         class_name: :Question,
         foreign_key: :q_id,

@@ -10,6 +10,8 @@
 #
 class Question < ApplicationRecord
 
+    validates :q_body, presence: true
+
     belongs_to :poll,
         class_name: :Poll,
         foreign_key: :poll_id,
