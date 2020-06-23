@@ -25,6 +25,8 @@ class Response < ApplicationRecord
 
 
     has_one :question, through: :answer
+    #Lol, this bug was fixed in 2018. Roll tide. Thanks Jacy!
+    has_one :poll, through: :question
 
     
     def sibling_response
@@ -41,6 +43,7 @@ class Response < ApplicationRecord
         end    
     end
 
+    #You can refactor this with the above association if needed. This calls multiple queries.
     def poll_author
         self.question.poll.user_id
     end
