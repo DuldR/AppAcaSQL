@@ -23,4 +23,27 @@ class Question < ApplicationRecord
         primary_key: :id
 
     has_many :responses, through: :answers
+
+    def results
+        # N + 1
+        # data = self.answers
+        # responses = {}
+
+        # data.each do |ans|
+        #     responses[ans.a_body] = ans.responses.count
+        # end
+
+        # responses
+
+        # Includes to pre-fetch the data to reduce query count. A whole millisecond faster!
+
+        data = self.answers.includes(:responses)
+        responses = {}
+
+        data.each do |ans|
+            responses[ans.a_body] = ans.responses.length
+        end
+
+        responses
+    end
 end

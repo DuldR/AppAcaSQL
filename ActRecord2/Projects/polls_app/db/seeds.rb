@@ -9,6 +9,9 @@
 
 User.create!(username: "NPRLuvr69")
 User.create!(username: "FoxNewsFan420")
+User.create!(username: "NinaTokenBurg")
+User.create!(username: "DeweyChetham")
+User.create!(username: "MAGAlabama")
 
 Poll.create!(title: "AOC", user_id: 1)
 Poll.create!(title: "Mcconnell", user_id: 2)
@@ -24,3 +27,6 @@ AnswerChoice.create!(q_id: 2, a_body: "He's fine!")
 AnswerChoice.create!(q_id: 2, a_body: "Turtle!")
 
 Response.create!(answer_id: 1, user_id: 2)
+Response.create!(answer_id: 1, user_id: 3)
+Response.create!(answer_id: 1, user_id: 4)
+Response.create!(answer_id: 2, user_id: 5)
