@@ -1340,3 +1340,10 @@ Migrating to ChangeResponseColumnName (20200622215623)
   [1m[36mQuestion Load (0.6ms)[0m  [1m[34mSELECT "questions".* FROM "questions" ORDER BY "questions"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
   [1m[36mAnswerChoice Load (0.7ms)[0m  [1m[34mSELECT "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."q_id" = $1[0m  [["q_id", 1]]
   [1m[36mResponse Load (0.3ms)[0m  [1m[34mSELECT "responses".* FROM "responses" WHERE "responses"."answer_id" IN ($1, $2, $3)[0m  [["answer_id", 1], ["answer_id", 2], ["answer_id", 3]]
+  [1m[36mQuestion Load (0.6ms)[0m  [1m[34mSELECT "questions".* FROM "questions" ORDER BY "questions"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mQuestion Load (1.0ms)[0m  [1m[34mSELECT "questions".* FROM "questions" ORDER BY "questions"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mQuestion Load (2.1ms)[0m  [1m[34mSELECT answer_choices.*, COUNT(responses.id) FROM "questions" INNER JOIN "answer_choices" ON "answer_choices"."q_id" = "questions"."id" LEFT OUTER JOIN responses on responses.answer_id = answer_choices.id GROUP BY answer_choice.a_body[0m
+  [1m[36mQuestion Load (1.8ms)[0m  [1m[34mSELECT answer_choices.*, COUNT(responses.id) FROM "questions" INNER JOIN "answer_choices" ON "answer_choices"."q_id" = "questions"."id" LEFT OUTER JOIN responses on responses.answer_id = answer_choices.id GROUP BY answer_choice.a_body LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mQuestion Load (0.6ms)[0m  [1m[34mSELECT "questions".* FROM "questions" ORDER BY "questions"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mQuestion Load (0.6ms)[0m  [1m[34mSELECT "questions".* FROM "questions" ORDER BY "questions"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mAnswerChoice Load (1.5ms)[0m  [1m[34mSELECT answer_choices.*, COUNT(responses.id) AS resp_count FROM "answer_choices" LEFT OUTER JOIN "responses" ON "responses"."answer_id" = "answer_choices"."id" WHERE "answer_choices"."q_id" = $1 GROUP BY answer_choices.id[0m  [["q_id", 1]]

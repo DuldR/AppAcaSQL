@@ -25,7 +25,7 @@ class Question < ApplicationRecord
     has_many :responses, through: :answers
 
     def results
-        # N + 1
+        # N + 1 Slowest
         # data = self.answers
         # responses = {}
 
@@ -37,13 +37,27 @@ class Question < ApplicationRecord
 
         # Includes to pre-fetch the data to reduce query count. A whole millisecond faster!
 
-        data = self.answers.includes(:responses)
-        responses = {}
+        # data = self.answers.includes(:responses)
+        # responses = {}
 
-        data.each do |ans|
-            responses[ans.a_body] = ans.responses.length
+        # data.each do |ans|
+        #     responses[ans.a_body] = ans.responses.length
+        # end
+
+        # responses
+
+        # Active Record Way - Uh, includes is faster by a half a millisecond. Is this truly better? Apparently, includes sends data to the client which is uneccessary. 
+
+        data = self.answers
+            .select('answer_choices.*, COUNT(responses.id) AS resp_count')
+            .left_outer_joins(:responses)
+            .group("answer_choices.id")
+
+        data.inject({}) do |results, ac|
+            results[ac.a_body] = ac.resp_count; results
         end
 
-        responses
+
+
     end
 end
