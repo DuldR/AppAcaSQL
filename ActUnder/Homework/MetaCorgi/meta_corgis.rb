@@ -1,4 +1,4 @@
-class SnackBox
+ class SnackBox
   SNACK_BOX_DATA = {
     1 => {
       "bone" => {
@@ -111,6 +111,13 @@ class MetaCorgiSnacks
 
   def method_missing(name, *args)
     # Your code goes here...
+
+    
+    name = name.to_s
+    info = "get_" + "#{name}" + "_info"
+    tastiness = "get_" + "#{name}" + "_tastiness"
+
+    @snack_box.send(info, 1)
   end
 
 
