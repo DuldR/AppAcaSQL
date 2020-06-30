@@ -20,11 +20,10 @@ ul li a, figcaption a {
 header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
-header > img {
-  width: 33%;
-}
+
 
 
 .ingredients-list {
