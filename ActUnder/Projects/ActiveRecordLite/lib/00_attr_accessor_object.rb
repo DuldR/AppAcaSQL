@@ -3,9 +3,10 @@ class AttrAccessorObject
 
     names.each do |name|
       define_method(name) do
-        instace_variable_get(name)
+        instance_variable_get("@" + "#{name}")
       end
     end
+
 
   end
 end

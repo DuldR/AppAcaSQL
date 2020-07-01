@@ -1,6 +1,6 @@
 require '00_attr_accessor_object'
 
-class Dan < AttAccessorObject
+class Dan
 
     def initialize
 
@@ -13,10 +13,14 @@ class Dan < AttAccessorObject
   def self.my_attr_accessor(*names)
     # ...
 
-    define_method(names) do
-      instance_variable_get(names)
-      instance_variable_set(names)
+    names.each do |name|
+
+      define_method(name) do
+        instance_variable_get("@" + "#{name}")
+      end
     end
 
   end
+
+
 end
