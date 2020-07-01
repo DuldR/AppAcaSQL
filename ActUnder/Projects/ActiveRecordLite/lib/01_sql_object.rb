@@ -17,6 +17,9 @@ class SQLObject
 
   def self.table_name
     # ...
+    # p self.to_s.downcase + "s"
+
+    self.to_s.pluralize.downcase
   end
 
   def self.all
