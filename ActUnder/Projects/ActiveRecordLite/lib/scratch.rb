@@ -15,8 +15,8 @@ class Dan
 
     names.each do |name|
 
-      define_method(name) do
-        instance_variable_get("@" + "#{name}")
+      define_method("#{name}" + "=") do
+        instance_variable_set("@" + "#{name}"
       end
     end
 
