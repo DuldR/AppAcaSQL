@@ -5,7 +5,6 @@ require 'active_support/inflector'
 
 class SQLObject
 
-  @@table = nil
 
   def self.columns
     # ...
@@ -16,18 +15,14 @@ class SQLObject
 
   def self.table_name=(table_name)
     # ...
-
-    @@table = table_name
+    @table_name = table_name
   end
 
   def self.table_name
     # ...
     # p self.to_s.downcase + "s"
-    if @@table.nil?
-      @@table = self.to_s.titleize.downcase.pluralize
-    else
-      @@table
-    end
+
+    @table_name || self.name.downcase.pluralize
 
   end
 
