@@ -8,6 +8,14 @@ class SQLObject
 
   def self.columns
     # ...
+
+    @columns ||= DBConnection.execute2(<<-SQL)[0].map { |str| str.to_sym }
+      SELECT
+        *
+      FROM
+        cats
+    SQL
+
   end
 
   def self.finalize!
