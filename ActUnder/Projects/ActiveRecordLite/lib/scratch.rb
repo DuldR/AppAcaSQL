@@ -1,16 +1,25 @@
 require 'active_support/inflector'
 class Dan
 
-  attr_accessor :table
+  attr_accessor :attributes
 
-  def self.repeat
-    @table = self
-    @table.to_s.titleize.downcase.pluralize
+
+
+  def self.meth
+    @attributes = {}
+
+    column = [:name, :id]
+    column.each do |method|
+      define_method(method) do
+        @attributes[method]
+      end
+
+      define_method("#{method}" + "=") do |arg|
+        @attributes[method] = arg
+      end
+    end
+
   end
 
-  def self.access(name)
-    @table = name
-    @table
-  end
 
 end
