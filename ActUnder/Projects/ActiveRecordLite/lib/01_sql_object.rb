@@ -133,6 +133,7 @@ class SQLObject
       (#{question_marks})
     SQL
 
+    self.send("id=", DBConnection.last_insert_row_id)
 
   end
 
