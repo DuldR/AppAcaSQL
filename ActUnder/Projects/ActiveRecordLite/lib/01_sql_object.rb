@@ -55,6 +55,8 @@ class SQLObject
         "#{self.table_name}"
       SQL
 
+
+    parse_all(data)
     
 
   end
