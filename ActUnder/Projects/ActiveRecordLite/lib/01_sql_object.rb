@@ -115,26 +115,28 @@ class SQLObject
 
   def attribute_values
     # ...
-    @attributes.values
+    values = self.class.columns.map { |item| self.send(item) }
   end
 
   def insert
     # ...
 
-    col_names = self.class.columns.join(", ")
-    question_marks = (["?"] * self.class.columns.length).join(", ")
 
-    print col_names
-    print question_marks
-    print *attribute_values
+    print attribute_values
+    # col_names = self.class.columns.join(", ")
+    # question_marks = (["?"] * self.class.columns.length).join(", ")
 
-    DBConnection.execute(<<-SQL, "Gizmo", 1)
+    # print col_names
+    # print question_marks
+    # print *attribute_values
 
-    INSERT INTO
-      "#{self.class.table_name}" (#{col_names})
-    VALUES
-      (#{question_marks})
-    SQL
+    # DBConnection.execute(<<-SQL, "Gizmo", 1)
+
+    # INSERT INTO
+    #   "#{self.class.table_name}" (*attribute_values)
+    # VALUES
+    #   (#{question_marks})
+    # SQL
 
 
   end
