@@ -47,6 +47,13 @@ class SQLObject
 
   def self.all
     # ...
+    data = DBConnection.execute(<<-SQL)
+      SELECT
+        "#{self.table_name}".*
+      FROM
+        "#{self.table_name}"
+      SQL
+
   end
 
   def self.parse_all(results)
