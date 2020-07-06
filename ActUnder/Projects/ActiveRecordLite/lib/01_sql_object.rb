@@ -10,7 +10,7 @@ class SQLObject
     # ...
     # https://www.youtube.com/watch?v=P-3GOo_nWoc
     # I explicitly call out the god damn cats table like an idiot.
-
+    # This was a problem.
 
     @columns ||= DBConnection.execute2(<<-SQL)[0].map { |str| str.to_sym }
       SELECT
@@ -66,6 +66,8 @@ class SQLObject
 
   end
 
+
+  #This can be refactored
   def self.parse_all(results)
     # ...
     obj_arr = []
@@ -149,15 +151,26 @@ class SQLObject
   
     # DBConnection.execute(<<-SQL, *attribute_values)
 
-    # UPDATE
-    #   "#{self.class.table_name}"
-    # SET
-    #   (#{set_line})
-    # WHERE
-    #   id = ?
+    #   UPDATE
+    #     "#{self.class.table_name}"
+    #   SET
+    #     (#{set_line})
+    #   WHERE
+    #     id = ?
 
 
     # SQL
+
+    DBConnection.execute(<<-SQL, *attribute_values, self.id)
+
+      UPDATE
+        #{self.class.table_name}
+      SET
+        #{set_line}
+      WHERE
+        id = ?
+    SQL
+
   end
 
   def save
