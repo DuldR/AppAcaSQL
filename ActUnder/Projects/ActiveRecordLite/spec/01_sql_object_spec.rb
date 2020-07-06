@@ -100,6 +100,7 @@ describe SQLObject do
         expect(c.name).to eq 'Nick Diaz'
         expect(c.id).to eq 209
         expect(c.owner_id).to eq 2
+
       end
 
       it 'created getter methods read from attributes hash' do
@@ -174,9 +175,13 @@ describe SQLObject do
     describe '::find' do
       it 'fetches single objects by id' do
         c = Cat.find(1)
+        h = Human.find(1)
+
 
         expect(c).to be_instance_of(Cat)
         expect(c.id).to eq(1)
+
+        expect(h.id).to eq(1)
       end
 
       it 'returns nil if no object has the given id' do

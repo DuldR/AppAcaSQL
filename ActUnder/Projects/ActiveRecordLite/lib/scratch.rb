@@ -1,15 +1,5 @@
-class Cat
-
-  def self.make_self(param)
-    self.new(param)
-  end
-
-  def initialize(params = {})
-
-    @name = params[:name]
-    @owner_id = params[:owner_id]
-  end
-
+class Human < SQLObject
+  self.table_name = 'humans'
 
 end
 

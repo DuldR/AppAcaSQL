@@ -8,19 +8,24 @@ class SQLObject
 
   def self.columns
     # ...
+    # https://www.youtube.com/watch?v=P-3GOo_nWoc
+    # I explicitly call out the god damn cats table like an idiot.
+
 
     @columns ||= DBConnection.execute2(<<-SQL)[0].map { |str| str.to_sym }
       SELECT
         *
       FROM
-        cats
+        #{self.table_name}
+        
     SQL
 
   end
 
+
   def self.finalize!
 
-    SQLObject.columns.each do |method|
+    self.columns.each do |method|
       define_method(method) do
         self.attributes[method]
       end
@@ -41,7 +46,7 @@ class SQLObject
     # ...
     # p self.to_s.downcase + "s"
 
-    @table_name || self.name.downcase.pluralize
+    @table_name ||= self.name.downcase.pluralize
 
   end
 
@@ -55,7 +60,7 @@ class SQLObject
         "#{self.table_name}"
       SQL
 
-
+    
     parse_all(data)
     
 
@@ -115,7 +120,7 @@ class SQLObject
 
   def attribute_values
     # ...
-    values = self.class.columns.map { |item| self.send(item) }
+    self.class.columns.map { |item| self.send(item) }
   end
 
   def insert
@@ -139,11 +144,24 @@ class SQLObject
 
   def update
     # ...
+
+    set_line = self.class.columns.map { |item| "#{item} = ?" }.join(", ")
+  
+    # DBConnection.execute(<<-SQL, *attribute_values)
+
+    # UPDATE
+    #   "#{self.class.table_name}"
+    # SET
+    #   (#{set_line})
+    # WHERE
+    #   id = ?
+
+
+    # SQL
   end
 
   def save
     # ...
   end
 
-  SQLObject.finalize!
 end
