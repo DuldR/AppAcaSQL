@@ -149,17 +149,6 @@ class SQLObject
 
     set_line = self.class.columns.map { |item| "#{item} = ?" }.join(", ")
   
-    # DBConnection.execute(<<-SQL, *attribute_values)
-
-    #   UPDATE
-    #     "#{self.class.table_name}"
-    #   SET
-    #     (#{set_line})
-    #   WHERE
-    #     id = ?
-
-
-    # SQL
 
     DBConnection.execute(<<-SQL, *attribute_values, self.id)
 
