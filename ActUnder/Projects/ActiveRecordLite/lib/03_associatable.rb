@@ -90,8 +90,9 @@ module Associatable
     fkey = boptions.foreign_key
     pkey = boptions.primary_key
 
-
-    print boptions.model_class.where(id: 1)
+    define_method(name) do
+      boptions.model_class.where("#{pkey}": self.send("#{fkey}")).first
+    end
     
 
   end
