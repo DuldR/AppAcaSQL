@@ -87,7 +87,12 @@ module Associatable
 
     boptions = BelongsToOptions.new(name.to_s, options)
 
-    # print self.where(owner_id: 1, boptions.primary_key: 1)
+    fkey = boptions.foreign_key
+    pkey = boptions.primary_key
+
+
+    print boptions.model_class.where(id: 1)
+    
 
   end
 
