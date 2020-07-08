@@ -86,6 +86,7 @@ module Associatable
   # Phase IIIb
   def belongs_to(name, options = {})
     # ...
+
   end
 
   def has_many(name, options = {})
@@ -99,5 +100,5 @@ end
 
 class SQLObject
   # Mixin Associatable here...
-  include Associatable
+  extend Associatable
 end
