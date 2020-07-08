@@ -26,10 +26,7 @@ class BelongsToOptions < AssocOptions
   def initialize(name, options = {})
     # ...
 
-    name = name.singularize
-
-
-
+    # name = name.singularize
     #self.class_name = name.camelize
     #self.foreign_key = "#{name}_id".to_sym
 
@@ -86,6 +83,11 @@ module Associatable
   # Phase IIIb
   def belongs_to(name, options = {})
     # ...
+
+
+    boptions = BelongsToOptions.new(name.to_s, options)
+
+    # print self.where(owner_id: 1, boptions.primary_key: 1)
 
   end
 
