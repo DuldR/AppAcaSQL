@@ -55,7 +55,9 @@ class HasManyOptions < AssocOptions
   def initialize(name, self_class_name, options = {})
     # ...
 
+
     name = name.singularize
+  
     self_class_name = self_class_name.singularize.downcase
 
 
@@ -99,6 +101,16 @@ module Associatable
 
   def has_many(name, options = {})
     # ...
+
+    hoptions = HasManyOptions.new(name.to_s, self.name, options)
+
+    fkey = hoptions.foreign_key
+    pkey = hoptions.primary_key
+
+    define_method(name) do
+      hoptions.model_class.where("#{fkey}": self.send("#{pkey}"))
+    end
+
   end
 
   def assoc_options
