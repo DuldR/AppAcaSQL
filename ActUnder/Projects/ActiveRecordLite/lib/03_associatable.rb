@@ -87,13 +87,16 @@ module Associatable
     # ...
 
 
-    boptions = BelongsToOptions.new(name.to_s, options)
+    # boptions = BelongsToOptions.new(name.to_s, options)
 
-    fkey = boptions.foreign_key
-    pkey = boptions.primary_key
+    #This passes, but it's MEGA ugly.
+    self.assoc_options[name] = BelongsToOptions.new(name.to_s, options)
+
+    fkey = self.assoc_options[name].foreign_key
+    pkey = self.assoc_options[name].primary_key
 
     define_method(name) do
-      boptions.model_class.where("#{pkey}": self.send("#{fkey}")).first
+      self.assoc_options[name].model_class.where("#{pkey}": self.send("#{fkey}")).first
     end
     
 
