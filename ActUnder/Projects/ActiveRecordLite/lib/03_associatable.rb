@@ -95,8 +95,9 @@ module Associatable
     fkey = self.assoc_options[name].foreign_key
     pkey = self.assoc_options[name].primary_key
 
+    #Needed to add class as this is an isntance method.
     define_method(name) do
-      self.assoc_options[name].model_class.where("#{pkey}": self.send("#{fkey}")).first
+      self.class.assoc_options[name].model_class.where("#{pkey}": self.send("#{fkey}")).first
     end
     
 
