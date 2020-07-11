@@ -14,22 +14,27 @@ module Associatable
 
     define_method(name) do
 
-      through_options = self.assoc_options[through_name]source_options = through_options.model_class.assoc_options[source_name]
+      through_options = self.class.assoc_options[through_name]
+      source_options = through_options.model_class.assoc_options[source_name]
 
-      fkey = through_options.model_class.assoc_options[source_name].foreign_key
+      fkey = through_options.foreign_key
+      pkey = source_options.primary_key
+
+      fkeyval = self.send(fkey)
 
 
-      print fkey
-      # data = DBConnection.execute(<<-SQL)
-      #   SELECT
-      #     "#{self.table_name}".*
-      #   FROM
-      #     "#{source_options.model_class.table_name}"
-      #   WHERE
-      #     "#{fkey}" = "#{pkey}"
-      # SQL
 
-      # parse_all(data)
+      data = DBConnection.execute(<<-SQL, fkeyval).first
+        SELECT
+          "#{source_options.model_class.table_name}".*
+        FROM
+          "#{source_options.model_class.table_name}"
+        WHERE
+          "#{pkey}" = ?
+      SQL
+
+      source_options.model_class.new(data)
+      
     end
 
   
